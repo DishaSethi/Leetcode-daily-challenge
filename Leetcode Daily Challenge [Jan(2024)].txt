@@ -1,0 +1,107 @@
+﻿January 1
+Assign Cookies(easy)
+Time complexity:O(nlogn)
+Space complexity: O(1)
+Soln:
+class Solution {
+   
+    public int findContentChildren(int[] g, int[] s) {
+    int cookieNums=s.length;
+    if(cookieNums==0) return 0;
+
+
+    Arrays.sort(g);
+    Arrays.sort(s);
+
+
+    int cookieIndex=s.length-1;
+    int childIndex=g.length-1;
+int maxNum=0;
+while(cookieIndex>=0 && childIndex>=0){
+    if(s[cookieIndex]>=g[childIndex]){
+        maxNum++;
+        cookieIndex--;
+        childIndex--;
+    }
+    else{
+        childIndex--;
+    }
+}
+return maxNum;
+
+
+    }
+}
+
+
+
+
+
+
+January 2
+Convert an array into a 2D array with conditions(Medium)
+
+
+My soln:
+import java.util.*;
+class Solution {
+   
+    public List<List<Integer>> findMatrix(int[] nums) {
+             ArrayList<List<Integer> > twoD
+            = new ArrayList<List<Integer> >();
+List<Integer> numslist=new ArrayList<Integer> ();
+for(int i=0;i<nums.length;i++){
+    numslist.add(nums[i]);
+}
+int count=0;
+while( count!=nums.length){
+    List<Integer> list1=new ArrayList<Integer>();
+    int i=0;
+    while(i!=numslist.size()){
+if(list1.contains(numslist.get(i))==false){
+list1.add(numslist.get(i));
+count++;
+numslist.remove(numslist.get(i));
+
+
+}
+else{i++;}
+
+
+    }
+
+
+    twoD.add(list1);
+}
+return twoD;
+
+
+    }
+}
+
+
+Best optimised soln: Time complexity:
+        O(n).   Space complexity:O(n)
+import java.util.*;
+
+
+class Solution {
+    public List<List<Integer>> findMatrix(int[] nums) {
+        int[] freq = new int[nums.length + 1];
+        List<List<Integer>> ans = new ArrayList<>();
+
+
+        for (int c : nums) {
+            if (freq[c] >= ans.size()) {
+                ans.add(new ArrayList<>());
+            }
+
+
+            ans.get(freq[c]).add(c);
+            freq[c]++;
+        }
+
+
+        return ans;
+    }
+}
