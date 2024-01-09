@@ -234,3 +234,59 @@ int sum=0;
         }
     }
 }
+
+
+
+
+
+
+January 9
+Leaf 
+Time Complexity:  O(n)
+Space Complexity:O(h1+h2) h1 ans h2 are heights of the two trees
+My soln:
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean leafSimilar(TreeNode root1, TreeNode root2) {
+        ArrayList<Integer> lv1=new ArrayList<Integer>();
+          ArrayList<Integer> lv2=new ArrayList<Integer>();
+          collectLeafValues(root1,lv1);
+          collectLeafValues(root2,lv2);
+         
+          return lv1.equals(lv2);
+
+
+
+
+    }
+  public void collectLeafValues(TreeNode root, ArrayList lv){
+ if(root==null){
+     return;
+ }
+ if(root.right==null && root.left==null){
+   lv.add(root.val);
+   
+ }
+     collectLeafValues(root.right,lv);
+     collectLeafValues(root.left,lv);
+ 
+ 
+
+
+  }
+   
+}
