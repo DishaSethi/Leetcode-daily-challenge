@@ -410,3 +410,148 @@ class Solution {
         return ans;
     }
 }
+
+
+
+
+January 14
+Determine if two strings are close
+My soln:
+Time Complexity:O(nlogn +mlogm)
+Space Complexity:O(n +m)
+import java.util.*;
+class Solution {
+    public boolean closeStrings(String word1, String word2) {
+        if(word1.length()!=word2.length())
+        return false;
+
+
+        HashMap<Character,Integer> wf1=new HashMap<>();
+        HashMap<Character,Integer> wf2=new HashMap<>();
+       
+        for(int i=0;i<word1.length();i++){
+            if(wf1.containsKey(word1.charAt(i))){
+                char place=word1.charAt(i);
+                int before=wf1.get(place);
+                wf1.put(place,before+1);
+            }else{
+                char place=word1.charAt(i);
+                wf1.put(place,1);
+            }
+              if(wf2.containsKey(word2.charAt(i))){
+                char place=word2.charAt(i);
+                int before=wf2.get(place);
+                wf2.put(place,before+1);
+            }else{
+                char place=word2.charAt(i);
+                wf2.put(place,1);
+            }
+        }
+if(wf1.keySet().equals(wf2.keySet())==false){
+    return false;
+}
+
+
+Collection<Integer> val1=wf1.values();
+ArrayList<Integer> v1=new ArrayList<>(val1);
+Collection<Integer> val2=wf2.values();
+ArrayList<Integer> v2=new ArrayList<>(val2);
+
+
+Collections.sort(v1);
+Collections.sort(v2);
+if(v1.equals(v2)){
+    return true;
+}else{
+    return false;
+}
+
+
+            }
+}
+Another Approach using arrays:
+Same time complexity and space complexity
+import java.util.*;
+class Solution {
+    public boolean closeStrings(String word1, String word2) {
+        if(word1.length()!=word2.length())
+        return false;
+
+
+        HashMap<Character,Integer> wf1=new HashMap<>();
+        HashMap<Character,Integer> wf2=new HashMap<>();
+       
+        for(int i=0;i<word1.length();i++){
+            if(wf1.containsKey(word1.charAt(i))){
+                char place=word1.charAt(i);
+                int before=wf1.get(place);
+                wf1.put(place,before+1);
+            }else{
+                char place=word1.charAt(i);
+                wf1.put(place,1);
+            }
+              if(wf2.containsKey(word2.charAt(i))){
+                char place=word2.charAt(i);
+                int before=wf2.get(place);
+                wf2.put(place,before+1);
+            }else{
+                char place=word2.charAt(i);
+                wf2.put(place,1);
+            }
+        }
+if(wf1.keySet().equals(wf2.keySet())==false){
+    return false;
+}
+
+
+Collection<Integer> val1=wf1.values();
+ArrayList<Integer> v1=new ArrayList<>(val1);
+Collection<Integer> val2=wf2.values();
+ArrayList<Integer> v2=new ArrayList<>(val2);
+
+
+Collections.sort(v1);
+Collections.sort(v2);class Solution {
+    public boolean closeStrings(String word1, String word2) {
+        int[] freq1 = new int[26];
+        int[] freq2 = new int[26];
+
+
+        for (int i = 0; i < word1.length(); ++i) {
+            freq1[word1.charAt(i) - 'a']++;
+        }
+
+
+        for (int i = 0; i < word2.length(); ++i) {
+            freq2[word2.charAt(i) - 'a']++;
+        }
+
+
+        for (int i = 0; i < 26; ++i) {
+            if ((freq1[i] > 0 && freq2[i] == 0) || (freq2[i] > 0 && freq1[i] == 0)) {
+                return false;
+            }
+        }
+
+
+        Arrays.sort(freq1);
+        Arrays.sort(freq2);
+
+
+        for (int i = 0; i < 26; ++i) {
+            if (freq1[i] != freq2[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+if(v1.equals(v2)){
+    return true;
+}else{
+    return false;
+}
+
+
+            }
+}
