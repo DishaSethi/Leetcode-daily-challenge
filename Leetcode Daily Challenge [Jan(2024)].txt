@@ -555,3 +555,85 @@ if(v1.equals(v2)){
 
             }
 }
+
+
+January 15 
+Find the players with zero or one losses
+My soln:
+Time complexity:O(n)
+Space complexity:O(n)
+import java.util.*;
+class Solution {
+    public List<List<Integer>> findWinners(int[][] match) {
+  HashMap<Integer,Integer> win=new HashMap<>();
+    HashMap<Integer,Integer> loser=new HashMap<>();
+        for(int i=0;i<match.length;i++){
+            if(win.containsKey(match[i][0])==true){
+                win.put(match[i][0],win.get(match[i][0])+1);
+            }else{
+                win.put(match[i][0],1);
+            }
+              if(loser.containsKey(match[i][1])==true){
+                loser.put(match[i][1],loser.get(match[i][1])+1);
+            }else{
+                loser.put(match[i][1],1);
+            }
+        }
+        ArrayList<List<Integer>> ans=new ArrayList<List<Integer>>();
+        ArrayList<Integer> winn=new ArrayList<Integer>();
+for(Integer key:win.keySet()){
+    if(loser.containsKey(key)==false){
+        winn.add(key);
+    }
+}
+        ArrayList<Integer> loss=new ArrayList<Integer>();
+        Collections.sort(winn);
+ans.add(winn);
+for(Integer key : loser.keySet()){
+    if(loser.get(key)==1){
+        loss.add(key);
+    }
+}
+ Collections.sort(loss);
+ans.add(loss);
+return ans;
+    }
+}
+Other approach:
+Time and space complexity:O(n)  n=length of matches array and O(m) m=number of players limited to 100,001
+class Solution {
+    public List<List<Integer>> findWinners(int[][] matches) {
+        int [] losses=new int[100001];
+        for(int i=0;i<matches.length;i++){
+            int win=matches[i][0];
+            int loss=matches[i][1];
+
+
+            if(losses[win]==0){
+                losses[win]=-1;
+            }
+            if(losses[loss]==-1){
+                losses[loss]=1;
+            }else{
+                losses[loss]++;
+            }
+        }
+        List<Integer> zl=new ArrayList<>();
+        List<Integer> ol=new ArrayList<>();
+
+
+        List<List<Integer>> result=new ArrayList<>();
+        for(int i=0;i<losses.length;i++){
+            if(losses[i]==-1){
+                zl.add(i);
+            }else if(losses[i]==1){
+                ol.add(i);
+            }
+        }
+
+
+        result.add(zl);
+        result.add(ol);
+        return result;
+    }
+}
