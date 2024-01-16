@@ -637,3 +637,97 @@ class Solution {
         return result;
     }
 }
+January 17
+Insert Delete GetRandom O(1)
+Time complexity:O(1)
+Space complexity: O(n)
+Approach:
+class RandomizedSet {
+private ArrayList<Integer> list;
+// private Map<Integer,Integer> map;
+    public RandomizedSet() {
+      list =new ArrayList<>();
+    //   map=new HashMap<>();
+     
+    }
+    private boolean search(int val){
+        return list.contains(val);
+    }
+    public boolean insert(int val) {
+        if(search(val)==true) return false;
+        list.add(val);
+        // map.put(val,list.size()-1);
+        return true;
+    }
+   
+    public boolean remove(int val) {
+        if(!search(val)) return false;
+
+
+        list.remove(list.indexOf(val));
+
+
+        return true;
+    }
+   
+    public int getRandom() {
+        Random rand=new Random();
+        return list.get(rand.nextInt(list.size()));
+    }
+}
+
+
+/**
+ * Your RandomizedSet object will be instantiated and called as such:
+ * RandomizedSet obj = new RandomizedSet();
+ * boolean param_1 = obj.insert(val);
+ * boolean param_2 = obj.remove(val);
+ * int param_3 = obj.getRandom();
+ */
+
+
+
+
+My soln after seeing the final soln and doing some changes to it :
+class RandomizedSet {
+private ArrayList<Integer> list;
+// private Map<Integer,Integer> map;
+    public RandomizedSet() {
+      list =new ArrayList<>();
+    //   map=new HashMap<>();
+     
+    }
+    private boolean search(int val){
+        return list.contains(val);
+    }
+    public boolean insert(int val) {
+        if(search(val)==true) return false;
+        list.add(val);
+        // map.put(val,list.size()-1);
+        return true;
+    }
+   
+    public boolean remove(int val) {
+        if(!search(val)) return false;
+
+
+        list.remove(list.indexOf(val));
+
+
+        return true;
+    }
+   
+    public int getRandom() {
+        Random rand=new Random();
+        return list.get(rand.nextInt(list.size()));
+    }
+}
+
+
+/**
+ * Your RandomizedSet object will be instantiated and called as such:
+ * RandomizedSet obj = new RandomizedSet();
+ * boolean param_1 = obj.insert(val);
+ * boolean param_2 = obj.remove(val);
+ * int param_3 = obj.getRandom();
+ */
