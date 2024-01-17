@@ -731,3 +731,96 @@ private ArrayList<Integer> list;
  * boolean param_2 = obj.remove(val);
  * int param_3 = obj.getRandom();
  */
+January 17
+Unique Number of Occurrences
+My soln:
+Time complexity:O(n)
+Space complexity:
+O(n)
+class Solution {
+    public boolean uniqueOccurrences(int[] arr) {
+        HashMap<Integer,Integer> hm=new HashMap<>();
+        for(int i=0;i<arr.length;i++){
+            if(hm.containsKey(arr[i])){
+                hm.put(arr[i],hm.get(arr[i])+1);
+            }else{
+                hm.put(arr[i],1);
+            }
+        }
+
+
+        for(Integer keycheck:hm.keySet()){
+            int count=0;
+            for(Integer key:hm.keySet()){
+            if(hm.get(keycheck)==hm.get(key)){
+                count++;
+            }
+            }
+            if(count>1){
+                return false;
+         
+            }
+        }
+        return true;
+    }
+}
+Approach 2
+Time complexity:O(nlogn)
+Space complexity:O(n)
+   import java.util.*;
+class Solution {
+public boolean uniqueOccurrences(int[] arr) {
+Arrays.sort(arr);
+ArrayList arl=new ArrayList<>();
+    int c=1;
+   
+    for(int i=0;i<arr.length-1;i++)
+    {
+        if(arr[i]==arr[i+1])
+            c++;
+       
+        else
+        {
+            arl.add(c);
+            c=1;
+        }
+       
+    }
+   
+    arl.add(c);
+   
+    Collections.sort(arl);
+   
+   
+    for(int i=0;i<arl.size()-1;i++)
+    {
+        if(arl.get(i)==arl.get(i+1))
+            return false;
+    }
+   
+    return true;
+   
+}
+}
+
+
+Approach 3:
+Time complexity:O(n)
+Space complexity:O(n)
+class Solution {
+    public boolean uniqueOccurrences(int[] arr) {
+        Map<Integer, Integer> freq = new HashMap<>();
+        for (int x : arr) {
+            freq.put(x, freq.getOrDefault(x, 0) + 1);
+        }
+
+
+        Set<Integer> s = new HashSet<>();
+        for (int x : freq.values()) {
+            s.add(x);
+        }
+
+
+        return freq.size() == s.size();
+    }
+}
