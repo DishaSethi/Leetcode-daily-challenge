@@ -1,0 +1,1135 @@
+﻿January 1
+Assign Cookies(easy)
+Time complexity:O(nlogn)
+Space complexity: O(1)
+Soln:
+class Solution {
+   
+    public int findContentChildren(int[] g, int[] s) {
+    int cookieNums=s.length;
+    if(cookieNums==0) return 0;
+
+
+    Arrays.sort(g);
+    Arrays.sort(s);
+
+
+    int cookieIndex=s.length-1;
+    int childIndex=g.length-1;
+int maxNum=0;
+while(cookieIndex>=0 && childIndex>=0){
+    if(s[cookieIndex]>=g[childIndex]){
+        maxNum++;
+        cookieIndex--;
+        childIndex--;
+    }
+    else{
+        childIndex--;
+    }
+}
+return maxNum;
+
+
+    }
+}
+
+
+
+
+
+
+January 2
+Convert an array into a 2D array with conditions(Medium)
+
+
+My soln:
+import java.util.*;
+class Solution {
+   
+    public List<List<Integer>> findMatrix(int[] nums) {
+             ArrayList<List<Integer> > twoD
+            = new ArrayList<List<Integer> >();
+List<Integer> numslist=new ArrayList<Integer> ();
+for(int i=0;i<nums.length;i++){
+    numslist.add(nums[i]);
+}
+int count=0;
+while( count!=nums.length){
+    List<Integer> list1=new ArrayList<Integer>();
+    int i=0;
+    while(i!=numslist.size()){
+if(list1.contains(numslist.get(i))==false){
+list1.add(numslist.get(i));
+count++;
+numslist.remove(numslist.get(i));
+
+
+}
+else{i++;}
+
+
+    }
+
+
+    twoD.add(list1);
+}
+return twoD;
+
+
+    }
+}
+
+
+Best optimised soln: Time complexity:
+        O(n).   Space complexity:O(n)
+import java.util.*;
+
+
+class Solution {
+    public List<List<Integer>> findMatrix(int[] nums) {
+        int[] freq = new int[nums.length + 1];
+        List<List<Integer>> ans = new ArrayList<>();
+
+
+        for (int c : nums) {
+            if (freq[c] >= ans.size()) {
+                ans.add(new ArrayList<>());
+            }
+
+
+            ans.get(freq[c]).add(c);
+            freq[c]++;
+        }
+
+
+        return ans;
+    }
+}
+
+
+
+
+January 4
+Minimum number of operations to make an array empty
+My soln:
+Time - 27ms Time complexity : O(n) & space complexity:O(n)
+class Solution {
+    public int minOperations(int[] nums) {
+        HashMap<Integer,Integer> hm=new HashMap<>();
+int ans=0;
+        for(int i=0;i<nums.length;i++){
+          if(hm.containsKey(nums[i])==true){
+              hm.put(nums[i],hm.get(nums[i])+1);
+          }else{
+              hm.put(nums[i],1);
+          }
+        }
+
+
+      for(Integer key:hm.keySet()){
+          if(hm.get(key)==1){
+              ans=-1;
+              break;
+          }
+          if(hm.get(key)%3==0){
+              ans=ans+(hm.get(key)/3);
+          }else if((hm.get(key)%3==1 || hm.get(key)%3==2)){
+        int count=  hm.get(key);
+        while(count%3!=0 && count!=1){
+            count=count-2;
+            ans++;
+        }
+        ans=ans+count/3;
+          }else if(hm.get(key)%2==0){
+              ans=ans+hm.get(key)/2;
+          }
+
+
+          }
+     
+      return ans;
+    }
+}
+Other soln:
+Faster
+Time-21ms Time complexity-O(n) & space complexity - O(n)
+import java.util.HashMap;
+import java.util.Map;
+
+
+class Solution {
+    public int minOperations(int[] nums) {
+        // Create a HashMap to store the frequency of each element in 'nums'
+        Map<Integer, Integer> mp = new HashMap<>();
+       
+        // Count the frequency of each element in 'nums'
+        for (int num : nums) {
+            // Put the element in the map and increment its count by 1
+            mp.put(num, mp.getOrDefault(num, 0) + 1);
+        }
+       
+        // Initialize a variable to count the minimum operations needed
+        int count = 0;
+       
+        // Iterate through the entries in the HashMap
+        for (Map.Entry<Integer, Integer> entry : mp.entrySet()) {
+            // Get the frequency count of the current element
+            int t = entry.getValue();
+           
+            // If there is only one occurrence of any element, it's not possible to make it divisible by 3
+            if (t == 1)
+                return -1;
+           
+            // Calculate the number of operations needed to make the frequency divisible by 3
+            count += t / 3; // Count the complete sets of 3 elements
+            if (t % 3 != 0) // If there are remaining elements, increment the count
+                count++;
+        }
+       
+        // Return the total count of operations needed
+        return count;
+    }
+}
+
+
+
+
+
+
+
+
+January 8 
+Range Sum of BST(easy)
+Time Complexity: O(n) as we visit all the nodes once
+Space Complexity: O(log n) for a balanced binary tree.
+For an unbalanced one it is O(n)
+My soln:
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int rangeSumBST(TreeNode root, int low, int high) {
+        if(root==null){
+            return 0;
+        }
+int sum=0;
+        if(root.val>=low && root.val<=high){
+            return  root.val+rangeSumBST(root.left, low , high)+rangeSumBST(root.right,low,high);
+
+
+        }else{
+            return rangeSumBST(root.left,low,high)+rangeSumBST(root.right,low,high);
+        }
+    }
+}
+
+
+
+
+
+
+January 9
+Leaf 
+Time Complexity:  O(n)
+Space Complexity:O(h1+h2) h1 ans h2 are heights of the two trees
+My soln:
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean leafSimilar(TreeNode root1, TreeNode root2) {
+        ArrayList<Integer> lv1=new ArrayList<Integer>();
+          ArrayList<Integer> lv2=new ArrayList<Integer>();
+          collectLeafValues(root1,lv1);
+          collectLeafValues(root2,lv2);
+         
+          return lv1.equals(lv2);
+
+
+
+
+    }
+  public void collectLeafValues(TreeNode root, ArrayList lv){
+ if(root==null){
+     return;
+ }
+ if(root.right==null && root.left==null){
+   lv.add(root.val);
+   
+ }
+     collectLeafValues(root.right,lv);
+     collectLeafValues(root.left,lv);
+ 
+ 
+
+
+  }
+   
+}
+January 11
+Maximum difference between node and ancestor
+Time complexity:O(n) as we visit each node once
+Space Complexity: O(h) where h is the height of the tree , in the worst case(unbalanced tree) the recursion stack could go as deep as the height of the tree.
+
+
+Soln:
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int maxAncestorDiff(TreeNode root) {
+        if(root==null)
+        return 0;
+        int min=root.val,max=root.val;
+        diff(root,min,max);
+        return diff;
+    }
+    public int diff=0;
+    public void diff(TreeNode root,int min,int max){
+        if(root==null){
+            return;
+        }
+
+
+        diff=Math.max(diff,Math.max(Math.abs(min-root.val),Math.abs(max-root.val)));
+        min=Math.min(root.val,min);
+        max=Math.max(root.val,max);
+        diff(root.left,min,max);
+        diff(root.right,min,max);
+
+
+    }
+}
+January 14
+Minimum Number of Steps to make Anagram
+My soln:
+Time Complexity:
+O(n)
+Space Complexity:O(1)
+class Solution {
+    public int minSteps(String s, String t) {
+              int count=0;
+        HashMap<String,Integer> sf=new HashMap<>();
+             HashMap<String,Integer> tf=new HashMap<>();
+        for(int i=0;i<s.length();i++){
+           
+if(sf.containsKey(s.substring(i,i+1))==true){
+    String place=s.substring(i,i+1);
+    int before=sf.get(place);
+sf.put(place,before+1);
+}else{
+    String place=    s.substring(i,i+1);
+    sf.put(place,1);
+}
+if(tf.containsKey(t.substring(i,i+1))==true){
+    String place=t.substring(i,i+1);
+    int before=tf.get(t.substring(i,i+1));
+tf.put(place,before+1);
+}else{
+    String place=    t.substring(i,i+1);
+    tf.put(place,1);
+}
+
+
+        }
+
+
+        for(String key:sf.keySet()){
+if(tf.containsKey(key)==true){
+    if(tf.get(key)==sf.get(key)){
+        count+=tf.get(key);
+    }else{
+    count+=Math.min(tf.get(key),sf.get(key));
+}}
+         } return s.length()-count;
+    }
+}
+Approach :2
+Optimised 
+Same time and space complexity just a change of logic
+class Solution {
+    public int minSteps(String s, String t) {
+        int[] count = new int[26];
+        int i = 0;
+
+
+        // Storing the difference of frequencies of characters in t and s.
+        while (i < s.length()) {
+            count[t.charAt(i) - 'a']++;
+            count[s.charAt(i) - 'a']--;
+            i++;
+        }
+
+
+        int ans = 0;
+        i = 0;
+
+
+        while (i < 26) {
+            ans += Math.max(0, count[i]);
+            i++;
+        }
+
+
+        return ans;
+    }
+}
+
+
+
+
+January 14
+Determine if two strings are close
+My soln:
+Time Complexity:O(nlogn +mlogm)
+Space Complexity:O(n +m)
+import java.util.*;
+class Solution {
+    public boolean closeStrings(String word1, String word2) {
+        if(word1.length()!=word2.length())
+        return false;
+
+
+        HashMap<Character,Integer> wf1=new HashMap<>();
+        HashMap<Character,Integer> wf2=new HashMap<>();
+       
+        for(int i=0;i<word1.length();i++){
+            if(wf1.containsKey(word1.charAt(i))){
+                char place=word1.charAt(i);
+                int before=wf1.get(place);
+                wf1.put(place,before+1);
+            }else{
+                char place=word1.charAt(i);
+                wf1.put(place,1);
+            }
+              if(wf2.containsKey(word2.charAt(i))){
+                char place=word2.charAt(i);
+                int before=wf2.get(place);
+                wf2.put(place,before+1);
+            }else{
+                char place=word2.charAt(i);
+                wf2.put(place,1);
+            }
+        }
+if(wf1.keySet().equals(wf2.keySet())==false){
+    return false;
+}
+
+
+Collection<Integer> val1=wf1.values();
+ArrayList<Integer> v1=new ArrayList<>(val1);
+Collection<Integer> val2=wf2.values();
+ArrayList<Integer> v2=new ArrayList<>(val2);
+
+
+Collections.sort(v1);
+Collections.sort(v2);
+if(v1.equals(v2)){
+    return true;
+}else{
+    return false;
+}
+
+
+            }
+}
+Another Approach using arrays:
+Same time complexity and space complexity
+import java.util.*;
+class Solution {
+    public boolean closeStrings(String word1, String word2) {
+        if(word1.length()!=word2.length())
+        return false;
+
+
+        HashMap<Character,Integer> wf1=new HashMap<>();
+        HashMap<Character,Integer> wf2=new HashMap<>();
+       
+        for(int i=0;i<word1.length();i++){
+            if(wf1.containsKey(word1.charAt(i))){
+                char place=word1.charAt(i);
+                int before=wf1.get(place);
+                wf1.put(place,before+1);
+            }else{
+                char place=word1.charAt(i);
+                wf1.put(place,1);
+            }
+              if(wf2.containsKey(word2.charAt(i))){
+                char place=word2.charAt(i);
+                int before=wf2.get(place);
+                wf2.put(place,before+1);
+            }else{
+                char place=word2.charAt(i);
+                wf2.put(place,1);
+            }
+        }
+if(wf1.keySet().equals(wf2.keySet())==false){
+    return false;
+}
+
+
+Collection<Integer> val1=wf1.values();
+ArrayList<Integer> v1=new ArrayList<>(val1);
+Collection<Integer> val2=wf2.values();
+ArrayList<Integer> v2=new ArrayList<>(val2);
+
+
+Collections.sort(v1);
+Collections.sort(v2);class Solution {
+    public boolean closeStrings(String word1, String word2) {
+        int[] freq1 = new int[26];
+        int[] freq2 = new int[26];
+
+
+        for (int i = 0; i < word1.length(); ++i) {
+            freq1[word1.charAt(i) - 'a']++;
+        }
+
+
+        for (int i = 0; i < word2.length(); ++i) {
+            freq2[word2.charAt(i) - 'a']++;
+        }
+
+
+        for (int i = 0; i < 26; ++i) {
+            if ((freq1[i] > 0 && freq2[i] == 0) || (freq2[i] > 0 && freq1[i] == 0)) {
+                return false;
+            }
+        }
+
+
+        Arrays.sort(freq1);
+        Arrays.sort(freq2);
+
+
+        for (int i = 0; i < 26; ++i) {
+            if (freq1[i] != freq2[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+if(v1.equals(v2)){
+    return true;
+}else{
+    return false;
+}
+
+
+            }
+}
+
+
+January 15 
+Find the players with zero or one losses
+My soln:
+Time complexity:O(n)
+Space complexity:O(n)
+import java.util.*;
+class Solution {
+    public List<List<Integer>> findWinners(int[][] match) {
+  HashMap<Integer,Integer> win=new HashMap<>();
+    HashMap<Integer,Integer> loser=new HashMap<>();
+        for(int i=0;i<match.length;i++){
+            if(win.containsKey(match[i][0])==true){
+                win.put(match[i][0],win.get(match[i][0])+1);
+            }else{
+                win.put(match[i][0],1);
+            }
+              if(loser.containsKey(match[i][1])==true){
+                loser.put(match[i][1],loser.get(match[i][1])+1);
+            }else{
+                loser.put(match[i][1],1);
+            }
+        }
+        ArrayList<List<Integer>> ans=new ArrayList<List<Integer>>();
+        ArrayList<Integer> winn=new ArrayList<Integer>();
+for(Integer key:win.keySet()){
+    if(loser.containsKey(key)==false){
+        winn.add(key);
+    }
+}
+        ArrayList<Integer> loss=new ArrayList<Integer>();
+        Collections.sort(winn);
+ans.add(winn);
+for(Integer key : loser.keySet()){
+    if(loser.get(key)==1){
+        loss.add(key);
+    }
+}
+ Collections.sort(loss);
+ans.add(loss);
+return ans;
+    }
+}
+Other approach:
+Time and space complexity:O(n)  n=length of matches array and O(m) m=number of players limited to 100,001
+class Solution {
+    public List<List<Integer>> findWinners(int[][] matches) {
+        int [] losses=new int[100001];
+        for(int i=0;i<matches.length;i++){
+            int win=matches[i][0];
+            int loss=matches[i][1];
+
+
+            if(losses[win]==0){
+                losses[win]=-1;
+            }
+            if(losses[loss]==-1){
+                losses[loss]=1;
+            }else{
+                losses[loss]++;
+            }
+        }
+        List<Integer> zl=new ArrayList<>();
+        List<Integer> ol=new ArrayList<>();
+
+
+        List<List<Integer>> result=new ArrayList<>();
+        for(int i=0;i<losses.length;i++){
+            if(losses[i]==-1){
+                zl.add(i);
+            }else if(losses[i]==1){
+                ol.add(i);
+            }
+        }
+
+
+        result.add(zl);
+        result.add(ol);
+        return result;
+    }
+}
+January 17
+Insert Delete GetRandom O(1)
+Time complexity:O(1)
+Space complexity: O(n)
+Approach:
+class RandomizedSet {
+private ArrayList<Integer> list;
+// private Map<Integer,Integer> map;
+    public RandomizedSet() {
+      list =new ArrayList<>();
+    //   map=new HashMap<>();
+     
+    }
+    private boolean search(int val){
+        return list.contains(val);
+    }
+    public boolean insert(int val) {
+        if(search(val)==true) return false;
+        list.add(val);
+        // map.put(val,list.size()-1);
+        return true;
+    }
+   
+    public boolean remove(int val) {
+        if(!search(val)) return false;
+
+
+        list.remove(list.indexOf(val));
+
+
+        return true;
+    }
+   
+    public int getRandom() {
+        Random rand=new Random();
+        return list.get(rand.nextInt(list.size()));
+    }
+}
+
+
+/**
+ * Your RandomizedSet object will be instantiated and called as such:
+ * RandomizedSet obj = new RandomizedSet();
+ * boolean param_1 = obj.insert(val);
+ * boolean param_2 = obj.remove(val);
+ * int param_3 = obj.getRandom();
+ */
+
+
+
+
+My soln after seeing the final soln and doing some changes to it :
+class RandomizedSet {
+private ArrayList<Integer> list;
+// private Map<Integer,Integer> map;
+    public RandomizedSet() {
+      list =new ArrayList<>();
+    //   map=new HashMap<>();
+     
+    }
+    private boolean search(int val){
+        return list.contains(val);
+    }
+    public boolean insert(int val) {
+        if(search(val)==true) return false;
+        list.add(val);
+        // map.put(val,list.size()-1);
+        return true;
+    }
+   
+    public boolean remove(int val) {
+        if(!search(val)) return false;
+
+
+        list.remove(list.indexOf(val));
+
+
+        return true;
+    }
+   
+    public int getRandom() {
+        Random rand=new Random();
+        return list.get(rand.nextInt(list.size()));
+    }
+}
+
+
+/**
+ * Your RandomizedSet object will be instantiated and called as such:
+ * RandomizedSet obj = new RandomizedSet();
+ * boolean param_1 = obj.insert(val);
+ * boolean param_2 = obj.remove(val);
+ * int param_3 = obj.getRandom();
+ */
+January 17
+Unique Number of Occurrences
+My soln:
+Time complexity:O(n)
+Space complexity:
+O(n)
+class Solution {
+    public boolean uniqueOccurrences(int[] arr) {
+        HashMap<Integer,Integer> hm=new HashMap<>();
+        for(int i=0;i<arr.length;i++){
+            if(hm.containsKey(arr[i])){
+                hm.put(arr[i],hm.get(arr[i])+1);
+            }else{
+                hm.put(arr[i],1);
+            }
+        }
+
+
+        for(Integer keycheck:hm.keySet()){
+            int count=0;
+            for(Integer key:hm.keySet()){
+            if(hm.get(keycheck)==hm.get(key)){
+                count++;
+            }
+            }
+            if(count>1){
+                return false;
+         
+            }
+        }
+        return true;
+    }
+}
+Approach 2
+Time complexity:O(nlogn)
+Space complexity:O(n)
+   import java.util.*;
+class Solution {
+public boolean uniqueOccurrences(int[] arr) {
+Arrays.sort(arr);
+ArrayList arl=new ArrayList<>();
+    int c=1;
+   
+    for(int i=0;i<arr.length-1;i++)
+    {
+        if(arr[i]==arr[i+1])
+            c++;
+       
+        else
+        {
+            arl.add(c);
+            c=1;
+        }
+       
+    }
+   
+    arl.add(c);
+   
+    Collections.sort(arl);
+   
+   
+    for(int i=0;i<arl.size()-1;i++)
+    {
+        if(arl.get(i)==arl.get(i+1))
+            return false;
+    }
+   
+    return true;
+   
+}
+}
+
+
+Approach 3:
+Time complexity:O(n)
+Space complexity:O(n)
+class Solution {
+    public boolean uniqueOccurrences(int[] arr) {
+        Map<Integer, Integer> freq = new HashMap<>();
+        for (int x : arr) {
+            freq.put(x, freq.getOrDefault(x, 0) + 1);
+        }
+
+
+        Set<Integer> s = new HashSet<>();
+        for (int x : freq.values()) {
+            s.add(x);
+        }
+
+
+        return freq.size() == s.size();
+    }
+}
+
+
+January 18
+Climbing stairs
+My soln: 
+Recursion: TLE
+class Solution {
+    public int climbStairs(int n) {
+
+
+        if(n==0){
+            return 1;
+        }
+        if(n<0){
+            return 0;
+        }
+return climbStairs(n-1)+climbStairs(n-2);
+    }
+
+
+}
+
+
+DP(Tabulation/Bottom up):
+Time and space complexity:O(n)
+class Solution {
+    public int climbStairs(int n) {
+int dp[]=new int[n+1];
+dp[0]=1;
+
+
+dp[1]=1;
+for(int i=2;i<n+1;i++){
+dp[i]=dp[i-1]+dp[i-2];
+
+
+}
+ 
+return dp[n];}
+
+
+
+
+}
+
+
+Memoization(Top down):
+Time and space complexity:O(n)
+class Solution {
+    public int climbStairs(int n) {
+int dp[]=new int[n+1];
+
+
+for(int i=0;i<n+1;i++){
+    dp[i]=-1;
+}
+    int ans=climb(n,dp);
+return ans;}
+public int climb(int n,int dp[]){
+    if(n==0){
+       
+    return 1;}
+    if(n<0){
+        return 0;
+    }
+   if(dp[n]!=-1){
+       return dp[n];
+   }
+
+
+   return dp[n]=climb(n-1,dp)+climb(n-2,dp);
+
+
+}
+
+
+
+
+}
+
+
+
+
+Approach 4:Time and space complexity(O(n) and O(1))
+public class Solution {
+    public int climbStairs(int n) {
+        int a = 0;
+        int b = 1;
+        int c = 0;
+       
+        for (int i = 0; i < n; i++) {
+            c = a + b;
+            a = b;
+            b = c;
+        }
+       
+        return b;
+    }
+}
+
+
+
+
+
+
+
+
+Minimum Falling Sum Path
+Time complexity:
+O(n+m)
+Space complexity:O(n+m)
+Approach:Memoization
+class Solution {
+    public int minFallingPathSum(int[][] A) {
+        int m=A.length;
+        int n=A[0].length;
+        int[][] dp=new int[m][n];
+        if(m==1 ||n==1) return A[0][0];
+
+
+        for(int [] row:dp){
+            Arrays.fill(row,Integer.MAX_VALUE);
+        }
+        int ans=Integer.MAX_VALUE;
+
+
+        for(int i=0;i<A.length;++i){
+            ans=Math.min(ans,minPath(A,0,i,dp));
+        }
+        return ans;
+    }
+    public int minPath(int A[][],int row,int col,int[][]dp){
+        int m=A.length;
+        int n=A[0].length;
+
+
+        if(dp[row][col]!=Integer.MAX_VALUE) return dp[row][col];
+        if(row==m-1){
+            return dp[row][col]=A[row][col];
+        }
+        int left=Integer.MAX_VALUE, right=Integer.MAX_VALUE;
+
+
+        if(col>0){
+            left=minPath(A,row+1,col-1,dp);
+        }
+        int straight=minPath(A,row+1,col,dp);
+
+
+        if(col<n-1){
+            right=minPath(A,row+1,col+1,dp);
+        }
+        dp[row][col]=Math.min(left,Math.min(straight,right))+A[row][col];
+
+
+        return dp[row][col];
+    }
+}
+
+
+
+
+22 January
+Set Mismatch
+My soln:
+Time complexity:O(n)
+Space complexity:O(n)
+class Solution {
+    public int[] findErrorNums(int[] nums) {
+        HashMap<Integer,Integer> hm=new HashMap<>();
+        for(int i=0;i<nums.length;i++){
+            if(hm.containsKey(nums[i])==true){
+                hm.put(nums[i],hm.get(nums[i])+1);
+            }else{
+                hm.put(nums[i],1);
+            }
+        }
+
+
+int ans[]=new int[2];
+        for(int i=1;i<=nums.length;i++){
+         
+            if(hm.containsKey(i)==true){
+              if(hm.get(i)>1){
+                  ans[0]=i;
+              }
+
+
+            }else{
+                ans[1]=i;
+            }
+        }
+        return ans;
+    }
+}
+23 January 
+Maximum length of the string with unique characters(Medium)
+My soln:
+class Solution {
+    public int maxLength(List<String> arr) {
+    int c=0;
+int ans=lus(arr,0,"",0);
+    return ans;
+       
+    }
+
+
+    public int lus(List<String> arr, int i,String s,int maxlen){
+        if(i==arr.size()){
+            return maxlen;
+        }
+String maxun=arr.get(i)+s;
+        if(Unique(arr.get(i),s)==true && (maxlen<maxun.length())){
+            return Math.max( lus(arr,i+1,s+arr.get(i),maxun.length()),lus(arr,i+1,s,maxlen));
+        }else{
+            return  lus(arr,i+1,s,maxlen);
+        }
+    }
+
+
+    public boolean Unique(String a, String b){
+        HashMap<Character, Integer> hm=new HashMap<>();
+String s=a+b;
+        for(int i=0;i<s.length();i++){
+            if(hm.containsKey(s.charAt(i))){
+                return false;
+            }else{
+                hm.put(s.charAt(i),1);
+            }
+        }
+        return true;
+    }
+}
+
+
+
+
+January 30
+Evaluate reverse polish notation
+(Medium)
+My Soln:
+class Solution {
+    public int evalRPN(String[] tokens) {
+        Stack <Integer > st=new Stack<Integer> ();
+
+
+int i=0;
+        while(i<tokens.length){
+            if(!tokens[i].equals("+")&&!tokens[i].equals("-")&& !tokens[i].equals("/")&&!tokens[i].equals("*")){
+             int num=Integer.parseInt(tokens[i]);
+             st.push(num);
+             }else{
+                 int a=st.pop();
+                 int b=st.pop();
+                 int ans=operate(a,b,tokens[i]);
+                 st.push(ans);
+             }
+      i++;  }
+
+
+        return st.pop();
+    }
+    public static int operate(int a,int b,String operand){
+     int ans=0;
+        if(operand.equals("+")){
+           ans= b+a;
+        }
+       else   if(operand.equals("-")){
+             ans= b-a;
+        }
+     else     if(operand.equals("/")){
+            ans= b/a;
+        }
+       else   if(operand.equals("*")){
+              ans= b*a;
+        }
+        return ans;
+    }
+}
+
+
+February 1
+Divide Array into Arrays with maximum difference
+(Medium)
+soln:
+Time complexity:O(nlogn)
+class Solution {
+    public int [][] divideArray(int[] nums, int k) {
+        // int size=nums.length;
+       
+
+
+        Arrays.sort(nums);
+        // List<List<Integer>> ans=new ArrayList<>();
+        int ans[][]=new int[nums.length/3][3];
+        int l=0;
+
+
+      for(int i=0;i<nums.length/3;i++){
+          for(int j=0;j<3;j++){
+              ans[i][j]=nums[l++];
+          }
+          if(ans[i][2]-ans[i][0]<=k) continue;
+          else return new int[][]{};
+      }
+      return ans;
+   
+    }
+}
