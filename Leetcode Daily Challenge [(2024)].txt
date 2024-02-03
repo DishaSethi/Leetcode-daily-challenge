@@ -1179,3 +1179,45 @@ class Solution {
         return a;
     }
 }
+February 3
+Partition Array for Maximum Sum
+Soln:
+Time Complexity: O(n*k)
+Space Complexity: O(n)
+class Solution {
+       
+    public int maxSumAfterPartitioning(int[] arr, int k) {
+        int dp[]=new int[arr.length];
+    Arrays.fill(dp,-1);
+     int ans=maxSum(arr,k,0,dp);
+
+
+return ans;        
+    }
+    public int maxSum(int []arr,int k,int i,int []dp){
+if(i>=arr.length){
+    return 0;
+}
+int n=arr.length;
+if(dp[i]!=-1) return dp[i];
+int currMax=0;
+
+
+int max=Integer.MIN_VALUE;
+for(int p=i;p<  Math.min(i+k,n);p++){
+    currMax=Math.max(currMax,arr[p]);
+int tempans=maxSum(arr,k,p+1,dp)+currMax*(p-i+1);
+if(tempans>max){
+    max=tempans;
+}
+}
+dp[i]=max;
+return max;
+
+
+
+
+
+
+    }
+}
